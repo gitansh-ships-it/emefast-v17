@@ -30,13 +30,20 @@ export default function TopNav({ role = "USER" }: TopNavProps) {
                   <path d="M3 13h4l4-8 3.5 14 3-6h3.5" />
                 </svg>
               </span>
-              <span className="liquid-brand-container">
-                <img
-                  src="/emefast-brand.png"
-                  alt="EMEFast"
-                  className="liquid-brand-img"
-                />
-              </span>
+              <div className="liquid-brand-col">
+                <div className="liquid-wordmark">
+                  <span className="brand-eme">EME</span>
+                  <span className="brand-fast">
+                    Fast
+                    <span className="brand-speed-streak" aria-hidden="true">
+                      <span className="streak-main" />
+                      <span className="streak-sub" />
+                      <span className="streak-flare" />
+                    </span>
+                  </span>
+                </div>
+                <span className="brand-subtitle">EMERGENCY COORDINATION AI</span>
+              </div>
             </Link>
 
             <div className="apple-nav-spacer" />
