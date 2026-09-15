@@ -74,7 +74,7 @@ export default function TopNav({ role = "USER" }: TopNavProps) {
               title="Ambulance workspace"
               onClick={() => router.push("/ambulance/dashboard")}
             >
-              <Ambulance size={14} strokeWidth={2.2} />
+              <Ambulance size={14} strokeWidth={2.2} className="role-icon" />
               <span>Ambulance</span>
             </button>
             <button
@@ -84,7 +84,7 @@ export default function TopNav({ role = "USER" }: TopNavProps) {
               title="Hospital workspace"
               onClick={() => router.push("/hospital/dashboard")}
             >
-              <Building2 size={14} strokeWidth={2.2} />
+              <Building2 size={14} strokeWidth={2.2} className="role-icon" />
               <span>Hospital</span>
             </button>
             <button
@@ -94,7 +94,7 @@ export default function TopNav({ role = "USER" }: TopNavProps) {
               title="Admin workspace"
               onClick={() => router.push("/admin/dashboard")}
             >
-              <Settings2 size={14} strokeWidth={2.2} />
+              <Settings2 size={14} strokeWidth={2.2} className="role-icon" />
               <span>Admin</span>
             </button>
           </div>

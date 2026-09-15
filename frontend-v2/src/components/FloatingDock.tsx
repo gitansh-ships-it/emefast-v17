@@ -48,7 +48,7 @@ export default function FloatingDock({ role = "USER" }: FloatingDockProps) {
               className={`floating-dock-item ${active ? "active" : ""}`}
               aria-current={active ? "page" : undefined}
             >
-              <Icon size={13} strokeWidth={2.2} />
+              <Icon size={14} strokeWidth={2.2} className="dock-icon" />
               <span>{label}</span>
             </Link>
           );

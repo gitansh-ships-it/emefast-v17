@@ -2117,7 +2117,13 @@ html.theme-light .brand-subtitle {
   transform: translateY(-1px) !important;
 }
 
-/* Row 2 (36px): Full-width Apple Segmented Control */
+/* ==========================================================
+   V18 Apple Liquid Glass Navigation (iOS 26 Concept)
+   Values: Radius 28px | Blur 18px | Stroke 1.2px | Shadow 0 8 32
+   Active Glow: 0 0 24 rgba(255,69,58,.18) | Translucent Dividers
+   ========================================================== */
+
+/* 1. Role Switcher */
 .role-switcher {
   width: 100% !important;
   max-width: 100% !important;
@@ -2126,76 +2132,137 @@ html.theme-light .brand-subtitle {
   max-height: 36px !important;
   display: grid !important;
   grid-template-columns: repeat(3, 1fr) !important;
-  gap: 4px !important;
+  gap: 2px !important;
   padding: 3px !important;
-  border-radius: 12px !important;
+  border-radius: 28px !important;
   box-sizing: border-box !important;
+  position: relative !important;
+  backdrop-filter: blur(18px) saturate(190%) !important;
+  -webkit-backdrop-filter: blur(18px) saturate(190%) !important;
 }
 
 html.theme-dark .role-switcher {
-  background: rgba(255, 255, 255, 0.07) !important;
-  border: 1px solid rgba(255, 255, 255, 0.10) !important;
+  background: rgba(255, 255, 255, 0.08) !important;
+  border: 1.2px solid rgba(255, 255, 255, 0.28) !important;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.12),
+              inset 0 1px 0 rgba(255, 255, 255, 0.35),
+              inset 14px 0 20px -10px rgba(120, 180, 255, 0.18),
+              inset -14px 0 20px -10px rgba(255, 120, 160, 0.18) !important;
 }
 
 html.theme-light .role-switcher {
-  background: rgba(0, 0, 0, 0.05) !important;
-  border: 1px solid rgba(0, 0, 0, 0.08) !important;
+  background: rgba(255, 255, 255, 0.65) !important;
+  border: 1.2px solid rgba(255, 255, 255, 0.85) !important;
+  box-shadow: 0 8px 32px rgba(15, 23, 42, 0.08),
+              inset 0 1px 0 rgba(255, 255, 255, 1),
+              inset 14px 0 20px -10px rgba(120, 180, 255, 0.12),
+              inset -14px 0 20px -10px rgba(255, 120, 160, 0.12) !important;
 }
 
 .role-switcher button {
+  position: relative !important;
   width: 100% !important;
-  height: 30px !important;
-  min-height: 30px !important;
-  max-height: 30px !important;
+  height: 28px !important;
+  min-height: 28px !important;
+  max-height: 28px !important;
   display: flex !important;
   align-items: center !important;
   justify-content: center !important;
-  gap: 5px !important;
+  gap: 6px !important;
   padding: 0 4px !important;
   font-size: 11px !important;
-  font-weight: 700 !important;
+  font-weight: 500 !important; /* Inactive: medium weight text */
   white-space: nowrap !important;
-  border-radius: 9px !important;
+  border-radius: 24px !important;
   border: 0 !important;
-  color: var(--muted) !important;
+  color: rgba(255, 255, 255, 0.85) !important;
   background: transparent !important;
   cursor: pointer !important;
   box-sizing: border-box !important;
-  transition: all 0.18s ease !important;
+  transition: all 0.22s cubic-bezier(0.16, 1, 0.3, 1) !important;
 }
 
-.role-switcher button span {
-  display: inline !important;
+/* Inactive tabs: 70% opacity icons */
+.role-switcher button .role-icon,
+.role-switcher button svg {
+  opacity: 0.70 !important;
+  transition: opacity 0.2s ease, color 0.2s ease, transform 0.2s ease !important;
 }
 
-/* Active Pill: filled liquid pill, absolutely NO underline */
-.role-switcher button::after,
-.role-switcher button::before,
-.role-switcher button.active::after,
-.role-switcher button.active::before {
-  display: none !important;
-  content: none !important;
-}
-
-html.theme-dark .role-switcher button.active {
-  background: rgba(255, 255, 255, 0.20) !important;
+.role-switcher button:hover {
   color: #ffffff !important;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.2) !important;
-  border-bottom: 0 !important;
+}
+
+.role-switcher button:hover .role-icon,
+.role-switcher button:hover svg {
+  opacity: 1 !important;
+}
+
+/* Dividers: Ultra-thin translucent separators (rgba(255,255,255,0.12)) */
+.role-switcher button:not(:first-child)::before {
+  content: "" !important;
+  position: absolute !important;
+  left: -2px !important;
+  top: 50% !important;
+  transform: translateY(-50%) !important;
+  width: 1px !important;
+  height: 16px !important;
+  background: rgba(255, 255, 255, 0.12) !important;
+  pointer-events: none !important;
+  transition: opacity 0.18s ease !important;
+}
+
+html.theme-light .role-switcher button:not(:first-child)::before {
+  background: rgba(0, 0, 0, 0.08) !important;
+}
+
+/* Suppress divider if current or previous button is active */
+.role-switcher button.active::before,
+.role-switcher button.active + button::before {
+  opacity: 0 !important;
+  display: none !important;
+}
+
+/* Active tab: Frosted white instead of solid white, with soft red ambient glow (#FF453A at ~18% opacity) */
+html.theme-dark .role-switcher button.active {
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.90) 0%, rgba(240, 243, 248, 0.80) 100%) !important;
+  backdrop-filter: blur(14px) !important;
+  -webkit-backdrop-filter: blur(14px) !important;
+  color: #0f172a !important;
+  font-weight: 700 !important;
+  border: 1px solid rgba(255, 255, 255, 0.75) !important;
+  box-shadow: 0 0 24px rgba(255, 69, 58, 0.18), 0 2px 8px rgba(0, 0, 0, 0.12), inset 0 1px 0 rgba(255, 255, 255, 0.95) !important;
+}
+
+html.theme-dark .role-switcher button.active .role-icon,
+html.theme-dark .role-switcher button.active svg {
+  opacity: 1 !important;
+  color: #FF453A !important;
+  filter: drop-shadow(0 0 6px rgba(255, 69, 58, 0.45)) !important;
 }
 
 html.theme-light .role-switcher button {
-  color: #636366 !important;
+  color: #475467 !important;
 }
 
 html.theme-light .role-switcher button.active {
-  background: #ffffff !important;
-  color: #101828 !important;
-  box-shadow: 0 2px 10px rgba(15, 23, 42, 0.12), 0 1px 2px rgba(15, 23, 42, 0.06) !important;
-  border-bottom: 0 !important;
+  background: linear-gradient(180deg, #ffffff 0%, rgba(255, 255, 255, 0.92) 100%) !important;
+  backdrop-filter: blur(14px) !important;
+  -webkit-backdrop-filter: blur(14px) !important;
+  color: #0f172a !important;
+  font-weight: 700 !important;
+  border: 1px solid rgba(255, 255, 255, 0.95) !important;
+  box-shadow: 0 0 24px rgba(255, 69, 58, 0.18), 0 4px 12px rgba(15, 23, 42, 0.08), inset 0 1px 0 rgba(255, 255, 255, 1) !important;
 }
 
-/* Floating Navigation Dock (12px below header) */
+html.theme-light .role-switcher button.active .role-icon,
+html.theme-light .role-switcher button.active svg {
+  opacity: 1 !important;
+  color: #FF453A !important;
+  filter: drop-shadow(0 0 6px rgba(255, 69, 58, 0.4)) !important;
+}
+
+/* 2. Floating Navigation Dock (12px below header) */
 .floating-dock-container {
   display: flex !important;
   justify-content: center !important;
@@ -2211,17 +2278,20 @@ html.theme-light .role-switcher button.active {
 
 .floating-dock {
   pointer-events: auto !important;
-  height: 34px !important;
-  min-height: 34px !important;
-  max-height: 34px !important;
+  height: 36px !important;
+  min-height: 36px !important;
+  max-height: 36px !important;
   display: inline-flex !important;
   align-items: center !important;
-  gap: 4px !important;
+  gap: 2px !important;
   padding: 3px !important;
-  border-radius: 999px !important;
+  border-radius: 28px !important;
   max-width: calc(100% - 24px) !important;
   box-sizing: border-box !important;
   overflow-x: auto !important;
+  position: relative !important;
+  backdrop-filter: blur(18px) saturate(190%) !important;
+  -webkit-backdrop-filter: blur(18px) saturate(190%) !important;
 }
 
 .floating-dock::-webkit-scrollbar {
@@ -2229,60 +2299,127 @@ html.theme-light .role-switcher button.active {
 }
 
 html.theme-dark .floating-dock {
-  background: rgba(24, 24, 28, 0.72) !important;
-  border: 1px solid rgba(255, 255, 255, 0.18) !important;
-  backdrop-filter: blur(28px) saturate(180%) !important;
-  -webkit-backdrop-filter: blur(28px) saturate(180%) !important;
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.28), inset 0 1px 0 rgba(255, 255, 255, 0.15) !important;
+  background: rgba(255, 255, 255, 0.08) !important;
+  border: 1.2px solid rgba(255, 255, 255, 0.28) !important;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.12),
+              inset 0 1px 0 rgba(255, 255, 255, 0.35),
+              inset 14px 0 20px -10px rgba(120, 180, 255, 0.18),
+              inset -14px 0 20px -10px rgba(255, 120, 160, 0.18) !important;
 }
 
 html.theme-light .floating-dock {
-  background: rgba(255, 255, 255, 0.72) !important;
-  border: 1px solid rgba(0, 0, 0, 0.10) !important;
-  backdrop-filter: blur(28px) saturate(180%) !important;
-  -webkit-backdrop-filter: blur(28px) saturate(180%) !important;
-  box-shadow: 0 8px 32px rgba(15, 23, 42, 0.08), inset 0 1px 0 rgba(255, 255, 255, 0.9) !important;
+  background: rgba(255, 255, 255, 0.65) !important;
+  border: 1.2px solid rgba(255, 255, 255, 0.85) !important;
+  box-shadow: 0 8px 32px rgba(15, 23, 42, 0.08),
+              inset 0 1px 0 rgba(255, 255, 255, 1),
+              inset 14px 0 20px -10px rgba(120, 180, 255, 0.12),
+              inset -14px 0 20px -10px rgba(255, 120, 160, 0.12) !important;
 }
 
 .floating-dock-item {
+  position: relative !important;
   height: 28px !important;
   min-height: 28px !important;
   max-height: 28px !important;
-  padding: 0 12px !important;
+  padding: 0 14px !important;
   display: inline-flex !important;
   align-items: center !important;
-  gap: 5px !important;
-  border-radius: 999px !important;
+  justify-content: center !important;
+  gap: 6px !important;
+  border-radius: 24px !important;
   font-size: 11px !important;
-  font-weight: 700 !important;
-  color: var(--muted) !important;
+  font-weight: 500 !important; /* Inactive: medium weight text */
+  color: rgba(255, 255, 255, 0.85) !important;
   text-decoration: none !important;
-  transition: all 0.18s ease !important;
+  transition: all 0.22s cubic-bezier(0.16, 1, 0.3, 1) !important;
   white-space: nowrap !important;
 }
 
-.floating-dock-item:hover {
-  color: var(--text) !important;
+/* Inactive tabs: 70% opacity icons */
+.floating-dock-item .dock-icon,
+.floating-dock-item svg {
+  opacity: 0.70 !important;
+  transition: opacity 0.2s ease, color 0.2s ease !important;
 }
 
-html.theme-dark .floating-dock-item.active {
-  background: rgba(255, 255, 255, 0.20) !important;
+.floating-dock-item:hover {
   color: #ffffff !important;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.18) !important;
+}
+
+.floating-dock-item:hover .dock-icon,
+.floating-dock-item:hover svg {
+  opacity: 1 !important;
+}
+
+/* Dividers: Ultra-thin translucent separators (rgba(255,255,255,0.12)) */
+.floating-dock-item:not(:first-child)::before {
+  content: "" !important;
+  position: absolute !important;
+  left: -2px !important;
+  top: 50% !important;
+  transform: translateY(-50%) !important;
+  width: 1px !important;
+  height: 16px !important;
+  background: rgba(255, 255, 255, 0.12) !important;
+  pointer-events: none !important;
+  transition: opacity 0.18s ease !important;
+}
+
+html.theme-light .floating-dock-item:not(:first-child)::before {
+  background: rgba(0, 0, 0, 0.08) !important;
+}
+
+/* Suppress divider adjacent to active item */
+.floating-dock-item.active::before,
+.floating-dock-item.active + .floating-dock-item::before {
+  opacity: 0 !important;
+  display: none !important;
+}
+
+/* Absolutely NO red dot under Overview */
+.floating-dock-item::after,
+.floating-dock-item.active::after {
+  display: none !important;
+  content: none !important;
+}
+
+/* Active tab: Frosted white instead of solid white, with soft red ambient glow (#FF453A at ~18% opacity) */
+html.theme-dark .floating-dock-item.active {
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.90) 0%, rgba(240, 243, 248, 0.80) 100%) !important;
+  backdrop-filter: blur(14px) !important;
+  -webkit-backdrop-filter: blur(14px) !important;
+  color: #0f172a !important;
+  font-weight: 700 !important;
+  border: 1px solid rgba(255, 255, 255, 0.75) !important;
+  box-shadow: 0 0 24px rgba(255, 69, 58, 0.18), 0 2px 8px rgba(0, 0, 0, 0.12), inset 0 1px 0 rgba(255, 255, 255, 0.95) !important;
+}
+
+html.theme-dark .floating-dock-item.active .dock-icon,
+html.theme-dark .floating-dock-item.active svg {
+  opacity: 1 !important;
+  color: #FF453A !important;
+  filter: drop-shadow(0 0 6px rgba(255, 69, 58, 0.45)) !important;
 }
 
 html.theme-light .floating-dock-item {
-  color: #636366 !important;
-}
-
-html.theme-light .floating-dock-item:hover {
-  color: #101828 !important;
+  color: #475467 !important;
 }
 
 html.theme-light .floating-dock-item.active {
-  background: #ffffff !important;
-  color: #101828 !important;
-  box-shadow: 0 2px 8px rgba(15, 23, 42, 0.12), 0 1px 2px rgba(15, 23, 42, 0.06) !important;
+  background: linear-gradient(180deg, #ffffff 0%, rgba(255, 255, 255, 0.92) 100%) !important;
+  backdrop-filter: blur(14px) !important;
+  -webkit-backdrop-filter: blur(14px) !important;
+  color: #0f172a !important;
+  font-weight: 700 !important;
+  border: 1px solid rgba(255, 255, 255, 0.95) !important;
+  box-shadow: 0 0 24px rgba(255, 69, 58, 0.18), 0 4px 12px rgba(15, 23, 42, 0.08), inset 0 1px 0 rgba(255, 255, 255, 1) !important;
+}
+
+html.theme-light .floating-dock-item.active .dock-icon,
+html.theme-light .floating-dock-item.active svg {
+  opacity: 1 !important;
+  color: #FF453A !important;
+  filter: drop-shadow(0 0 6px rgba(255, 69, 58, 0.4)) !important;
 }
 
 /* Remove verified coordination on mobile only */
