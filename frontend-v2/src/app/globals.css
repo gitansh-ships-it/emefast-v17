@@ -1832,44 +1832,158 @@ html.theme-light .liquid-brand-text {
   height: 44px !important;
 }
 
-/* Theme Toggle (44x44) centered */
+/* ==========================================================
+   Apple Liquid Glass Neumorphic Theme Toggle
+   Matches Reference: Frosted capsule, Meniscus curve, Prismatic refraction
+   ========================================================== */
 .liquid-theme-wrapper {
-  width: 44px !important;
-  height: 44px !important;
-  min-width: 44px !important;
-  max-width: 44px !important;
-  display: flex !important;
+  display: inline-flex !important;
   align-items: center !important;
   justify-content: center !important;
+  height: 44px !important;
 }
 
-.liquid-theme-wrapper .theme-toggle {
-  width: 44px !important;
-  height: 44px !important;
-  min-height: 44px !important;
-  max-height: 44px !important;
-  max-width: 44px !important;
-  border-radius: 12px !important;
+.liquid-glass-toggle {
+  position: relative !important;
+  width: 68px !important;
+  height: 38px !important;
+  min-width: 68px !important;
+  max-width: 68px !important;
+  min-height: 38px !important;
+  max-height: 38px !important;
+  border-radius: 999px !important;
+  padding: 3px !important;
   display: flex !important;
   align-items: center !important;
-  justify-content: center !important;
-  padding: 0 !important;
-  margin: 0 !important;
+  justify-content: space-between !important;
   cursor: pointer !important;
-  backdrop-filter: blur(20px) !important;
-  -webkit-backdrop-filter: blur(20px) !important;
+  user-select: none !important;
+  border: 0 !important;
+  outline: none !important;
+  overflow: hidden !important;
+  box-sizing: border-box !important;
+  transition: all 0.3s ease !important;
+  backdrop-filter: blur(28px) saturate(200%) !important;
+  -webkit-backdrop-filter: blur(28px) saturate(200%) !important;
 }
 
-html.theme-dark .liquid-theme-wrapper .theme-toggle {
-  background: rgba(255, 255, 255, 0.08) !important;
-  border: 1px solid rgba(255, 255, 255, 0.12) !important;
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.1) !important;
+/* Light Mode Toggle Track (Exact match with reference image) */
+.liquid-glass-toggle.light-mode {
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.75) 0%, rgba(240, 243, 248, 0.45) 100%) !important;
+  border: 1px solid rgba(255, 255, 255, 0.9) !important;
+  box-shadow: 0 10px 24px rgba(15, 23, 42, 0.08), 0 2px 6px rgba(15, 23, 42, 0.04), inset 0 1.5px 1px rgba(255, 255, 255, 0.95), inset 0 -1.5px 1px rgba(255, 255, 255, 0.4) !important;
 }
 
-html.theme-light .liquid-theme-wrapper .theme-toggle {
-  background: rgba(0, 0, 0, 0.04) !important;
-  border: 1px solid rgba(0, 0, 0, 0.08) !important;
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.8) !important;
+/* Dark Mode Toggle Track */
+.liquid-glass-toggle.dark-mode {
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.12) 0%, rgba(255, 255, 255, 0.04) 100%) !important;
+  border: 1px solid rgba(255, 255, 255, 0.18) !important;
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.35), 0 2px 6px rgba(0, 0, 0, 0.2), inset 0 1.5px 1px rgba(255, 255, 255, 0.35), inset 0 -1.5px 1px rgba(0, 0, 0, 0.2) !important;
+}
+
+/* Meniscus Curved Optical Glass Reflection */
+.glass-meniscus-reflection {
+  position: absolute !important;
+  inset: 0 !important;
+  pointer-events: none !important;
+  border-radius: 999px !important;
+  background: radial-gradient(circle at 45% -15%, rgba(255, 255, 255, 0.6) 0%, transparent 60%) !important;
+  z-index: 1 !important;
+}
+
+/* Prismatic Warm / Cool Edge Glows */
+.glass-prism-warm {
+  position: absolute !important;
+  right: -2px !important;
+  top: 4px !important;
+  bottom: 4px !important;
+  width: 14px !important;
+  border-radius: 50% !important;
+  background: radial-gradient(ellipse at center, rgba(255, 155, 55, 0.26) 0%, transparent 75%) !important;
+  pointer-events: none !important;
+  filter: blur(2px) !important;
+  z-index: 1 !important;
+}
+
+.glass-prism-cool {
+  position: absolute !important;
+  left: -2px !important;
+  top: 4px !important;
+  bottom: 4px !important;
+  width: 14px !important;
+  border-radius: 50% !important;
+  background: radial-gradient(ellipse at center, rgba(160, 210, 255, 0.24) 0%, transparent 75%) !important;
+  pointer-events: none !important;
+  filter: blur(2px) !important;
+  z-index: 1 !important;
+}
+
+/* Sliding Frosted Glass Orb Thumb */
+.liquid-glass-thumb {
+  position: absolute !important;
+  top: 3px !important;
+  left: 3px !important;
+  width: 32px !important;
+  height: 32px !important;
+  border-radius: 50% !important;
+  z-index: 2 !important;
+  pointer-events: none !important;
+  transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), background 0.25s ease, box-shadow 0.25s ease !important;
+}
+
+/* Thumb in Light Mode (positioned over Sun on the right) */
+.liquid-glass-toggle.light-mode .liquid-glass-thumb {
+  transform: translateX(30px) !important;
+  background: radial-gradient(circle at 35% 30%, #ffffff 0%, rgba(255, 255, 255, 0.94) 70%, rgba(245, 247, 250, 0.9) 100%) !important;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12), 0 1px 3px rgba(0, 0, 0, 0.06), inset 0 1.5px 1px rgba(255, 255, 255, 1), inset 0 -1px 2px rgba(0, 0, 0, 0.04) !important;
+  border: 1px solid rgba(255, 255, 255, 0.9) !important;
+}
+
+/* Thumb in Dark Mode (positioned over Moon on the left) */
+.liquid-glass-toggle.dark-mode .liquid-glass-thumb {
+  transform: translateX(0px) !important;
+  background: radial-gradient(circle at 35% 30%, rgba(255, 255, 255, 0.32) 0%, rgba(255, 255, 255, 0.16) 100%) !important;
+  backdrop-filter: blur(16px) !important;
+  -webkit-backdrop-filter: blur(16px) !important;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.35), 0 1px 3px rgba(0, 0, 0, 0.2), inset 0 1.5px 1px rgba(255, 255, 255, 0.45), inset 0 -1px 2px rgba(0, 0, 0, 0.2) !important;
+  border: 1px solid rgba(255, 255, 255, 0.3) !important;
+}
+
+/* Toggle Icons */
+.toggle-icon {
+  width: 32px !important;
+  height: 32px !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  position: relative !important;
+  z-index: 3 !important;
+  pointer-events: none !important;
+  transition: all 0.25s ease !important;
+}
+
+/* Moon Icon Styling */
+.liquid-glass-toggle.light-mode .moon-icon {
+  color: #64748b !important;
+  opacity: 0.65 !important;
+}
+
+.liquid-glass-toggle.dark-mode .moon-icon {
+  color: #ffffff !important;
+  opacity: 1 !important;
+  filter: drop-shadow(0 0 4px rgba(255, 255, 255, 0.35)) !important;
+}
+
+/* Sun Icon Styling */
+.liquid-glass-toggle.light-mode .sun-icon {
+  color: #0f172a !important;
+  opacity: 1 !important;
+  filter: drop-shadow(0 0 2px rgba(0, 0, 0, 0.15)) !important;
+}
+
+.liquid-glass-toggle.dark-mode .sun-icon {
+  color: #71717a !important;
+  opacity: 0.55 !important;
 }
 
 /* SOS Button (56x44) */
