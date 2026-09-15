@@ -28,25 +28,41 @@ function HospitalDiscoveryInner() {
 
   useEffect(() => {
     fetchData();
-    const interval = setInterval(fetchData, 3000);
+    const interval = setInterval(fetchData, 1500);
     return () => clearInterval(interval);
   }, [caseIdParam]);
 
   const fetchData = async () => {
     try {
-      let targetId = caseIdParam || localStorage.getItem('emefast_current_case_id');
-      let caseData: EmergencyCase;
+      let targetId = caseIdParam || (typeof window !== 'undefined' ? localStorage.getItem('emefast_current_case_id') : null);
+      let caseData: EmergencyCase | null = null;
       if (targetId) {
-        const res = await api.get(`/emergency/${targetId}`);
-        caseData = res.data;
+        try {
+          const res = await api.get(`/emergency/${targetId}`);
+          caseData = res.data;
+        } catch {
+          if (typeof window !== 'undefined') localStorage.removeItem('emefast_current_case_id');
+          try {
+            const activeRes = await api.get('/emergency/active/current');
+            caseData = activeRes.data;
+          } catch {}
+        }
       } else {
-        const activeRes = await api.get('/emergency/active/current');
-        caseData = activeRes.data;
+        try {
+          const activeRes = await api.get('/emergency/active/current');
+          caseData = activeRes.data;
+        } catch {}
       }
       if (caseData) {
         setCurrentCase(caseData);
-        const recRes = await api.get(`/emergency/${caseData.id}/recommendation`);
-        setDecision(recRes.data);
+        if (typeof window !== 'undefined') localStorage.setItem('emefast_current_case_id', String(caseData.id));
+        try {
+          const recRes = await api.get(`/emergency/${caseData.id}/recommendation`);
+          setDecision(recRes.data);
+        } catch {}
+      } else {
+        setCurrentCase(null);
+        setDecision(null);
       }
     } catch {}
     finally { setLoading(false); }

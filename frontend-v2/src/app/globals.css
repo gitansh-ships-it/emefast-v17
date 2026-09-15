@@ -654,7 +654,7 @@ html.theme-light .app-frame { background:transparent !important; }
 .apple-nav-inner { max-width:1380px; }
 .apple-nav-actions { flex-shrink:0; }
 .role-switcher button { position:relative; min-width:0; }
-.role-switcher button.active::after { content:""; position:absolute; left:10px; right:10px; bottom:2px; height:2px; border-radius:999px; background:currentColor; opacity:.35; }
+.role-switcher button.active::after { display:none !important; content:none !important; }
 html.theme-light .role-switcher { background:rgba(255,255,255,.72); border-color:rgba(15,23,42,.10); }
 html.theme-light .role-switcher button:hover { background:rgba(15,23,42,.045); }
 
@@ -1789,25 +1789,119 @@ html.theme-light .role-switcher button.active { box-shadow: inset 0 0 0 1px rgba
 .hospital-discovery .sos-btn,
 .hospital-discovery .select-hospital-btn { min-height: 44px; cursor: pointer; touch-action: manipulation; }
 
-@media (max-width: 900px) {
-  .apple-nav-inner { position: relative; }
-  .apple-nav-pills { order: 3; }
-  .role-switcher { max-width: min(52vw, 260px) !important; overflow-x: auto !important; scrollbar-width: none; }
-  .role-switcher::-webkit-scrollbar { display: none; }
-  .role-switcher button { flex: 0 0 auto !important; width: auto !important; min-width: 0 !important; padding: 0 10px !important; }
-  .role-switcher button span { display: inline !important; }
+/* Apple Nav Responsive & Role Switcher: Exactly 3 equal segments on mobile */
+.apple-nav {
+  position: sticky !important;
+  top: 0 !important;
+  z-index: 1100 !important;
 }
-@media (max-width: 520px) {
-  .role-switcher { max-width: 46vw !important; }
-  .role-switcher button { min-height: 36px !important; padding: 0 9px !important; font-size: 9px !important; }
-  .role-switcher button svg { width: 12px; height: 12px; }
-  .google-map-shell .live-map { min-height: 300px; height: 300px; }
+
+.apple-nav-brand-row {
+  display: flex;
+  align-items: center;
+  gap: 14px;
 }
-@media (max-width: 390px) {
-  .role-switcher { max-width: 43vw !important; }
-  .role-switcher button { padding: 0 7px !important; gap: 3px !important; }
-  .role-switcher button span { display: inline !important; font-size: 8px; }
-  .theme-toggle { transform: scale(.92); transform-origin: center; }
+
+.apple-nav-quick-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.role-switcher {
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  padding: 3px;
+  border-radius: 999px;
+  background: rgba(255,255,255,.06);
+  border: 1px solid var(--stroke);
+}
+
+.role-switcher button {
+  position: relative;
+  border: 0;
+  background: transparent;
+  color: var(--muted);
+  padding: 7px 13px;
+  border-radius: 999px;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 11px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all .2s ease;
+}
+
+.role-switcher button.active {
+  color: #ffffff !important;
+  background: rgba(255,255,255,.16) !important;
+  box-shadow: 0 2px 8px rgba(0,0,0,.25), inset 0 1px 0 rgba(255,255,255,.14) !important;
+  border-bottom: 0 !important;
+}
+
+html.theme-light .role-switcher button.active {
+  color: #101828 !important;
+  background: #ffffff !important;
+  box-shadow: 0 2px 8px rgba(15,23,42,.12), 0 1px 2px rgba(15,23,42,.06) !important;
+}
+
+.role-switcher button::after,
+.role-switcher button::before,
+.role-switcher button.active::after,
+.role-switcher button.active::before {
+  display: none !important;
+  content: none !important;
+}
+
+@media (max-width: 768px) {
+  .apple-nav-inner {
+    flex-direction: column !important;
+    align-items: stretch !important;
+    gap: 8px !important;
+    padding: 8px 12px 6px !important;
+  }
+  .apple-nav-brand-row {
+    width: 100% !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+  }
+  .role-switcher {
+    width: 100% !important;
+    max-width: 100% !important;
+    display: flex !important;
+    gap: 3px !important;
+    padding: 3px !important;
+    border-radius: 999px !important;
+    box-sizing: border-box !important;
+    overflow: visible !important;
+  }
+  .role-switcher button {
+    flex: 1 1 0 !important;
+    width: 0 !important;
+    min-width: 0 !important;
+    max-width: none !important;
+    justify-content: center !important;
+    padding: 8px 4px !important;
+    font-size: 11px !important;
+    font-weight: 700 !important;
+    white-space: nowrap !important;
+  }
+  .role-switcher button span {
+    display: inline !important;
+  }
+  .apple-nav-pills {
+    width: 100% !important;
+    justify-content: center !important;
+    gap: 4px !important;
+    padding: 2px 0 !important;
+  }
+  .apple-nav-pill {
+    padding: 7px 11px !important;
+    font-size: 11px !important;
+  }
 }
 
 /* V16 location UX: never confuse the case origin with a device GPS fix. */

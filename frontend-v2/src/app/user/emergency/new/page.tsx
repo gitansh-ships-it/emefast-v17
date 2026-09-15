@@ -464,10 +464,13 @@ export default function CreateEmergencyPage() {
         latitude: lat,
         longitude: lng,
         address,
+        voice_transcript: voiceText.trim() || undefined,
       });
 
       const caseId = res.data.id;
-      localStorage.setItem("emefast_current_case_id", String(caseId));
+      if (typeof window !== "undefined") {
+        localStorage.setItem("emefast_current_case_id", String(caseId));
+      }
 
       let voiceUploadFailed = false;
       if (voiceBlob?.size) {
@@ -488,7 +491,15 @@ export default function CreateEmergencyPage() {
       setSuccess(voiceUploadFailed
         ? "Emergency case opened. Hospital query is live; voice upload needs a retry."
         : "Emergency case opened. Hospital queries are now live and the voice note was attached.");
-      setTimeout(() => router.push(`/user/hospitals?case_id=${caseId}`), 500);
+
+      // Clean up old recording and form state immediately upon submit
+      setVoiceBlob(null);
+      setVoiceText("");
+      setName("");
+      setAge("");
+      setCondition("");
+
+      setTimeout(() => router.push(`/user/hospitals?case_id=${caseId}`), 400);
     } catch (err: any) {
       setError(err?.response?.data?.detail || "Could not open the emergency case. Please try again.");
       setSubmitting(false);
