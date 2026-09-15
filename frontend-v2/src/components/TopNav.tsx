@@ -26,11 +26,11 @@ export default function TopNav({ role = "USER" }: TopNavProps) {
           <div className="apple-nav-row-1">
             <Link href="/" className="liquid-logo-link" aria-label="EMEFast home">
               <span className="liquid-logo" aria-hidden="true">
-                <Activity size={22} strokeWidth={2.4} />
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#ffffff" strokeWidth="2.8" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M3 13h4l4-8 3.5 14 3-6h3.5" />
+                </svg>
               </span>
-              <span className="liquid-brand-text">
-                EMEFast <small>AI</small>
-              </span>
+              <span className="liquid-brand-text">EMEFast</span>
             </Link>
 
             <div className="apple-nav-spacer" />
