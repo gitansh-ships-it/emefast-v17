@@ -37,23 +37,42 @@ export default function TopNav({ role = "USER" }: TopNavProps) {
   return (
     <header className="apple-nav">
       <div className="apple-nav-inner">
-        <div className="apple-nav-brand-row">
-          <Link href="/" className="brand-mark" aria-label="EMEFast home">
-            <span className="brand-icon"><Activity size={16} /></span>
-            <span>EMEFast <small>AI</small></span>
-          </Link>
-          <div className="apple-nav-quick-actions">
-            <ThemeToggle />
-            <button type="button" className="nav-sos" onClick={() => router.push("/ambulance/emergency/new")} aria-label="Open emergency">
-              <Siren size={14} /> <span>Emergency</span>
-            </button>
-          </div>
-        </div>
+        <Link href="/" className="brand-mark" aria-label="EMEFast home">
+          <span className="brand-icon"><Activity size={16} /></span>
+          <span>EMEFast <small>AI</small></span>
+        </Link>
 
         <div className="role-switcher" aria-label="Switch workspace">
-          <button type="button" className={activeRole === "USER" ? "active" : ""} aria-pressed={activeRole === "USER"} title="Ambulance workspace" onClick={() => router.push("/ambulance/dashboard")}><Ambulance size={14}/><span>Ambulance</span></button>
-          <button type="button" className={activeRole === "HOSPITAL" ? "active" : ""} aria-pressed={activeRole === "HOSPITAL"} title="Hospital workspace" onClick={() => router.push("/hospital/dashboard")}><Building2 size={14}/><span>Hospital</span></button>
-          <button type="button" className={activeRole === "ADMIN" ? "active" : ""} aria-pressed={activeRole === "ADMIN"} title="Admin workspace" onClick={() => router.push("/admin/dashboard")}><Settings2 size={14}/><span>Admin</span></button>
+          <button
+            type="button"
+            className={activeRole === "USER" ? "active" : ""}
+            aria-pressed={activeRole === "USER"}
+            title="Ambulance workspace"
+            onClick={() => router.push("/ambulance/dashboard")}
+          >
+            <Ambulance size={14} />
+            <span>Ambulance</span>
+          </button>
+          <button
+            type="button"
+            className={activeRole === "HOSPITAL" ? "active" : ""}
+            aria-pressed={activeRole === "HOSPITAL"}
+            title="Hospital workspace"
+            onClick={() => router.push("/hospital/dashboard")}
+          >
+            <Building2 size={14} />
+            <span>Hospital</span>
+          </button>
+          <button
+            type="button"
+            className={activeRole === "ADMIN" ? "active" : ""}
+            aria-pressed={activeRole === "ADMIN"}
+            title="Admin workspace"
+            onClick={() => router.push("/admin/dashboard")}
+          >
+            <Settings2 size={14} />
+            <span>Admin</span>
+          </button>
         </div>
 
         <nav className="apple-nav-pills" aria-label="Primary navigation">
@@ -68,6 +87,13 @@ export default function TopNav({ role = "USER" }: TopNavProps) {
             );
           })}
         </nav>
+
+        <div className="apple-nav-quick-actions">
+          <ThemeToggle />
+          <button type="button" className="nav-sos" onClick={() => router.push("/ambulance/emergency/new")} aria-label="Open emergency">
+            <Siren size={14} /> <span>Emergency</span>
+          </button>
+        </div>
       </div>
       <div className="apple-nav-subbar">
         <span><ShieldCheck size={12} /> Verified hospital coordination</span>

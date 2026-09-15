@@ -1711,111 +1711,94 @@ html.theme-dark ::-webkit-scrollbar-thumb { background:#3a3a40; }
   }
 }
 
-@media (max-width:430px) {
-  .apple-nav-inner {
-    grid-template-columns:30px minmax(0,1fr) auto !important;
-  }
-  .apple-nav-actions {
-    gap:3px !important;
-  }
-  .role-switcher button {
-    min-height:36px !important;
-    height:36px !important;
-    padding:0 7px !important;
-    font-size:8px !important;
-    gap:4px !important;
-  }
-  .role-switcher button svg {
-    width:12px !important;
-    height:12px !important;
-  }
-  .nav-sos {
-    min-width:38px !important;
-    width:38px !important;
-    height:38px !important;
-  }
+/* ==========================================================
+   EMEFast V18 — COMPACT APPLE HEADER (390px FIX)
+   Authoritative Navigation & Role Switcher Architecture
+   ========================================================== */
+
+/* Sticky navigation: Map must never overlap header */
+.apple-nav {
+  position: sticky !important;
+  top: 0 !important;
+  z-index: 1100 !important;
+  background: rgba(11, 11, 13, 0.85);
+  backdrop-filter: blur(24px) saturate(180%);
+  -webkit-backdrop-filter: blur(24px) saturate(180%);
+  border-bottom: 1px solid var(--stroke);
+  width: 100% !important;
+  margin: 0 !important;
+  border-radius: 0 !important;
 }
 
-/* At the narrowest widths, preserve the words by allowing the action group
-   to use the available row instead of hiding labels. */
-@media (max-width:380px) {
-  .apple-nav-actions {
-    gap:2px !important;
-  }
-  .role-switcher {
-    gap:1px !important;
-  }
-  .role-switcher button {
-    padding:0 5px !important;
-    font-size:7.5px !important;
-  }
-  .theme-toggle {
-    width:42px !important;
-    flex-basis:42px !important;
-  }
+html.theme-light .apple-nav {
+  background: rgba(255, 255, 255, 0.88) !important;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.08) !important;
 }
 
-/* Selected state = material fill only. Absolutely no underline. */
-html.theme-dark .role-switcher button.active {
-  background:rgba(255,255,255,.16) !important;
-  color:#fff !important;
-  box-shadow:inset 0 1px 0 rgba(255,255,255,.12), 0 2px 10px rgba(0,0,0,.18) !important;
-}
-html.theme-light .role-switcher button.active {
-  background:rgba(255,255,255,.96) !important;
-  color:#1c1c1e !important;
-  box-shadow:0 2px 9px rgba(60,60,67,.12) !important;
-}
-
-/* V14: map must always stay below the floating navigation/header. */
-.apple-nav { position: relative !important; z-index: 2000 !important; }
 .google-map-shell { position: relative; z-index: 0; isolation: isolate; }
 .google-map-shell .live-map { position: relative; z-index: 0; }
 .google-map-shell .live-map-status,
 .google-map-shell .live-map-error { z-index: 10; }
 
-/* V14: authoritative role/navigation geometry. Never hide role labels in responsive mode. */
-.role-switcher button span { display: inline !important; }
-.role-switcher button.active::before,
-.role-switcher button.active::after,
-.role-switcher button::before,
-.role-switcher button::after { content: none !important; display: none !important; }
-.role-switcher button.active { border-bottom: 0 !important; box-shadow: inset 0 0 0 1px rgba(255,255,255,.10), 0 2px 10px rgba(0,0,0,.12) !important; }
-html.theme-light .role-switcher button.active { box-shadow: inset 0 0 0 1px rgba(15,23,42,.08), 0 2px 10px rgba(15,23,42,.08) !important; }
-
-/* V14: hospital discovery actions must be true buttons with predictable hit targets. */
 .hospital-discovery button,
 .hospital-discovery a { position: relative; z-index: 5; pointer-events: auto; }
 .hospital-discovery .sos-btn,
 .hospital-discovery .select-hospital-btn { min-height: 44px; cursor: pointer; touch-action: manipulation; }
 
-/* Apple Nav Responsive & Role Switcher: Exactly 3 equal segments on mobile */
-.apple-nav {
-  position: sticky !important;
-  top: 0 !important;
-  z-index: 1100 !important;
+/* Brand styling */
+.brand-mark {
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 8px !important;
+  text-decoration: none !important;
+  color: var(--text) !important;
+  font-weight: 800 !important;
+  font-size: 16px !important;
+  letter-spacing: -0.02em !important;
 }
 
-.apple-nav-brand-row {
-  display: flex;
-  align-items: center;
-  gap: 14px;
+.brand-icon {
+  width: 28px !important;
+  height: 28px !important;
+  border-radius: 8px !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  background: linear-gradient(135deg, rgba(255, 59, 48, 0.2), rgba(255, 59, 48, 0.08)) !important;
+  border: 1px solid rgba(255, 59, 48, 0.35) !important;
+  color: #ff453a !important;
 }
 
-.apple-nav-quick-actions {
-  display: flex;
-  align-items: center;
-  gap: 10px;
+.nav-sos {
+  min-height: 32px !important;
+  height: 32px !important;
+  padding: 0 12px !important;
+  border-radius: 999px !important;
+  border: 1px solid rgba(255, 59, 48, 0.4) !important;
+  background: linear-gradient(135deg, #ff453a, #d81e18) !important;
+  color: #ffffff !important;
+  font-size: 11px !important;
+  font-weight: 800 !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 5px !important;
+  cursor: pointer !important;
+  white-space: nowrap !important;
+  box-shadow: 0 2px 10px rgba(255, 59, 48, 0.28) !important;
+  transition: transform 0.15s ease, filter 0.15s ease !important;
 }
 
+.nav-sos:hover {
+  filter: brightness(1.08) !important;
+  transform: translateY(-1px) !important;
+}
+
+/* Role Switcher Base Styles */
 .role-switcher {
-  display: inline-flex;
-  align-items: center;
-  gap: 3px;
-  padding: 3px;
   border-radius: 999px;
-  background: rgba(255,255,255,.06);
+  background: rgba(255, 255, 255, 0.06);
   border: 1px solid var(--stroke);
+  box-sizing: border-box;
 }
 
 .role-switcher button {
@@ -1823,30 +1806,17 @@ html.theme-light .role-switcher button.active { box-shadow: inset 0 0 0 1px rgba
   border: 0;
   background: transparent;
   color: var(--muted);
-  padding: 7px 13px;
-  border-radius: 999px;
-  display: flex;
-  align-items: center;
-  gap: 5px;
-  font-size: 11px;
   font-weight: 700;
   cursor: pointer;
-  transition: all .2s ease;
+  transition: all 0.2s ease;
+  white-space: nowrap;
 }
 
-.role-switcher button.active {
-  color: #ffffff !important;
-  background: rgba(255,255,255,.16) !important;
-  box-shadow: 0 2px 8px rgba(0,0,0,.25), inset 0 1px 0 rgba(255,255,255,.14) !important;
-  border-bottom: 0 !important;
+.role-switcher button span {
+  display: inline !important;
 }
 
-html.theme-light .role-switcher button.active {
-  color: #101828 !important;
-  background: #ffffff !important;
-  box-shadow: 0 2px 8px rgba(15,23,42,.12), 0 1px 2px rgba(15,23,42,.06) !important;
-}
-
+/* NO underline ever - filled glass pill only */
 .role-switcher button::after,
 .role-switcher button::before,
 .role-switcher button.active::after,
@@ -1855,52 +1825,161 @@ html.theme-light .role-switcher button.active {
   content: none !important;
 }
 
-@media (max-width: 768px) {
+html.theme-dark .role-switcher button.active {
+  background: rgba(255, 255, 255, 0.18) !important;
+  color: #ffffff !important;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25), inset 0 1px 0 rgba(255, 255, 255, 0.14) !important;
+  border-bottom: 0 !important;
+}
+
+html.theme-light .role-switcher {
+  background: rgba(0, 0, 0, 0.05) !important;
+  border-color: rgba(0, 0, 0, 0.08) !important;
+}
+
+html.theme-light .role-switcher button {
+  color: #636366 !important;
+}
+
+html.theme-light .role-switcher button.active {
+  background: #ffffff !important;
+  color: #101828 !important;
+  box-shadow: 0 2px 8px rgba(15, 23, 42, 0.12), 0 1px 2px rgba(15, 23, 42, 0.06) !important;
+  border-bottom: 0 !important;
+}
+
+/* Desktop (>768px): clean horizontal bar */
+@media (min-width: 769px) {
   .apple-nav-inner {
-    flex-direction: column !important;
-    align-items: stretch !important;
-    gap: 8px !important;
-    padding: 8px 12px 6px !important;
-  }
-  .apple-nav-brand-row {
-    width: 100% !important;
     display: flex !important;
     align-items: center !important;
     justify-content: space-between !important;
+    gap: 16px !important;
+    padding: 10px 24px !important;
+    max-width: 1440px !important;
+    margin: 0 auto !important;
+    min-height: 60px !important;
+  }
+  .brand-mark {
+    flex-shrink: 0;
   }
   .role-switcher {
+    display: inline-flex !important;
+    align-items: center !important;
+    gap: 3px !important;
+    padding: 3px !important;
+    height: 36px !important;
+  }
+  .role-switcher button {
+    display: inline-flex !important;
+    align-items: center !important;
+    gap: 6px !important;
+    padding: 6px 14px !important;
+    font-size: 11px !important;
+    border-radius: 999px !important;
+  }
+  .apple-nav-pills {
+    display: flex !important;
+    align-items: center !important;
+    gap: 6px !important;
+  }
+  .apple-nav-quick-actions {
+    display: flex !important;
+    align-items: center !important;
+    gap: 10px !important;
+    flex-shrink: 0 !important;
+  }
+  .apple-nav-subbar {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    padding: 0 24px 6px !important;
+    max-width: 1440px !important;
+    margin: 0 auto !important;
+    font-size: 10px !important;
+    color: var(--muted) !important;
+  }
+}
+
+/* Mobile (<=768px): Compact Apple Liquid Glass header (Total height <= 104px) */
+@media (max-width: 768px) {
+  .apple-nav {
+    height: 104px !important;
+    max-height: 104px !important;
+    overflow: hidden !important;
+    box-sizing: border-box !important;
+  }
+  .apple-nav-inner {
+    display: grid !important;
+    grid-template-columns: 1fr auto !important;
+    grid-template-rows: 42px 34px !important;
+    row-gap: 6px !important;
+    column-gap: 8px !important;
+    padding: 10px 12px 10px !important;
+    height: 104px !important;
+    max-height: 104px !important;
+    box-sizing: border-box !important;
+    align-items: center !important;
+    overflow: hidden !important;
+  }
+  .brand-mark {
+    grid-column: 1 / 2 !important;
+    grid-row: 1 / 2 !important;
+    height: 42px !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    gap: 8px !important;
+    justify-self: start !important;
+  }
+  .apple-nav-quick-actions {
+    grid-column: 2 / 3 !important;
+    grid-row: 1 / 2 !important;
+    height: 42px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: flex-end !important;
+    gap: 8px !important;
+    justify-self: end !important;
+  }
+  .role-switcher {
+    grid-column: 1 / 3 !important;
+    grid-row: 2 / 3 !important;
     width: 100% !important;
     max-width: 100% !important;
-    display: flex !important;
-    gap: 3px !important;
+    height: 34px !important;
+    min-height: 34px !important;
+    max-height: 34px !important;
+    display: grid !important;
+    grid-template-columns: repeat(3, 1fr) !important;
+    gap: 4px !important;
     padding: 3px !important;
     border-radius: 999px !important;
     box-sizing: border-box !important;
-    overflow: visible !important;
   }
   .role-switcher button {
-    flex: 1 1 0 !important;
-    width: 0 !important;
-    min-width: 0 !important;
-    max-width: none !important;
+    width: 100% !important;
+    height: 28px !important;
+    min-height: 28px !important;
+    max-height: 28px !important;
+    padding: 0 4px !important;
+    margin: 0 !important;
+    display: flex !important;
+    align-items: center !important;
     justify-content: center !important;
-    padding: 8px 4px !important;
+    gap: 5px !important;
     font-size: 11px !important;
     font-weight: 700 !important;
     white-space: nowrap !important;
+    border-radius: 999px !important;
+    border: 0 !important;
+    box-sizing: border-box !important;
   }
-  .role-switcher button span {
-    display: inline !important;
-  }
+  /* Remove separate Overview/Cases/Hospitals and Verified subbar on mobile */
   .apple-nav-pills {
-    width: 100% !important;
-    justify-content: center !important;
-    gap: 4px !important;
-    padding: 2px 0 !important;
+    display: none !important;
   }
-  .apple-nav-pill {
-    padding: 7px 11px !important;
-    font-size: 11px !important;
+  .apple-nav-subbar {
+    display: none !important;
   }
 }
 
