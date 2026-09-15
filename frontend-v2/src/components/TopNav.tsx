@@ -30,7 +30,13 @@ export default function TopNav({ role = "USER" }: TopNavProps) {
                   <path d="M3 13h4l4-8 3.5 14 3-6h3.5" />
                 </svg>
               </span>
-              <span className="liquid-brand-text">EMEFast</span>
+              <span className="liquid-brand-container">
+                <img
+                  src="/emefast-brand.png"
+                  alt="EMEFast"
+                  className="liquid-brand-img"
+                />
+              </span>
             </Link>
 
             <div className="apple-nav-spacer" />

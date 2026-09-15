@@ -1805,18 +1805,37 @@ html.theme-light .apple-nav {
   box-shadow: 0 4px 14px rgba(239, 56, 43, 0.38), inset 0 1px 0 rgba(255, 255, 255, 0.3) !important;
 }
 
-.liquid-brand-text {
-  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", Inter, system-ui, sans-serif !important;
-  font-size: 21px !important;
-  font-weight: 900 !important;
-  letter-spacing: -0.04em !important;
-  color: #ffffff !important;
-  line-height: 1 !important;
-  white-space: nowrap !important;
+.liquid-brand-container {
+  display: inline-flex !important;
+  align-items: center !important;
+  height: 36px !important;
+  position: relative !important;
+  transition: all 0.25s ease !important;
 }
 
-html.theme-light .liquid-brand-text {
-  color: #111827 !important;
+.liquid-brand-img {
+  height: 26px !important;
+  width: auto !important;
+  max-width: 140px !important;
+  object-fit: contain !important;
+  display: block !important;
+  filter: drop-shadow(0 0 10px rgba(255, 59, 48, 0.35)) !important;
+  user-select: none !important;
+  -webkit-user-drag: none !important;
+}
+
+html.theme-light .liquid-brand-container {
+  background: rgba(15, 18, 26, 0.88) !important;
+  backdrop-filter: blur(20px) !important;
+  -webkit-backdrop-filter: blur(20px) !important;
+  padding: 2px 10px !important;
+  border-radius: 999px !important;
+  border: 1px solid rgba(255, 255, 255, 0.22) !important;
+  box-shadow: 0 2px 10px rgba(15, 23, 42, 0.14) !important;
+}
+
+html.theme-light .liquid-brand-img {
+  height: 22px !important;
 }
 
 .apple-nav-spacer {
