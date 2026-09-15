@@ -10,7 +10,7 @@ const DATA = path.join(ROOT, 'emefast-demo.json');
 const UPLOADS = path.join(ROOT, 'uploads', 'voice');
 const PORT = Number(process.env.PORT || 8000);
 const DEMO_MODE = String(process.env.DEMO_MODE || '0') === '1';
-const allowedOrigins = String(process.env.CORS_ORIGINS || 'http://localhost:3001').split(',').map(x=>x.trim()).filter(Boolean);
+const allowedOrigins = String(process.env.CORS_ORIGINS || 'http://localhost:3001,https://frontend-v2-seven-chi.vercel.app').split(',').map(x=>x.trim()).filter(Boolean);
 const hospitals = [
   {id:1,name:'SMS Hospital',address:'Jawahar Lal Nehru Marg, Jaipur',latitude:26.9124,longitude:75.7873,estimated_emergency_cost:2500,available_icu:8,available_beds:34,capabilities:'Emergency, Trauma, Cardiac, Neuro, Orthopedic, Pediatric, Maternity, Ventilator, ICU',contact_phone:'+91 141 2560291'},
   {id:2,name:'Fortis Hospital',address:'Malviya Nagar, Jaipur',latitude:26.8540,longitude:75.8063,estimated_emergency_cost:3000,available_icu:6,available_beds:28,capabilities:'Emergency, Trauma, Cardiac, Neuro, Orthopedic, Ventilator, ICU',contact_phone:'+91 141 2547000'},
@@ -25,7 +25,7 @@ const seedUsers=[{id:1,name:'Ambulance Paramedic',email:'paramedic@emefast.demo'
 const empty=()=>({nextId:1,cases:[],responses:[],audit:[],users:seedUsers});
 async function load(){try{return JSON.parse(await readFile(DATA,'utf8'));}catch{return empty();}}
 async function save(db){await writeFile(DATA,JSON.stringify(db,null,2));}
-function corsOrigin(req){const origin=req.headers.origin;return origin && (allowedOrigins.includes('*') || allowedOrigins.includes(origin)) ? origin : (allowedOrigins.includes('*') ? '*' : 'null');}
+function corsOrigin(req){const origin=req.headers.origin;return origin && (allowedOrigins.includes('*') || allowedOrigins.includes(origin) || origin.endsWith('.vercel.app')) ? origin : (allowedOrigins.includes('*') ? '*' : 'null');}
 function json(res,status,data,req){const body=JSON.stringify(data);res.writeHead(status,{'content-type':'application/json','access-control-allow-origin':corsOrigin(req),'access-control-allow-headers':'Content-Type, Authorization, X-Voice-Transcript','access-control-allow-methods':'GET,POST,PUT,PATCH,OPTIONS','vary':'Origin'});res.end(body);}
 function send(res,status,data,req){return json(res,status,data,req);}
 function hav(a,b,c,d){const R=6371, p=Math.PI/180, x=(c-a)*p,y=(d-b)*p;const z=Math.sin(x/2)**2+Math.cos(a*p)*Math.cos(c*p)*Math.sin(y/2)**2;return Math.round(R*2*Math.atan2(Math.sqrt(z),Math.sqrt(1-z))*100)/100;}
