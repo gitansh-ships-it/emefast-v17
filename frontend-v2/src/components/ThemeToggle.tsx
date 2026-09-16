@@ -1,70 +1,91 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { Sun, Moon } from "lucide-react";
 
 export default function ThemeToggle() {
   const [mounted, setMounted] = useState(false);
-  const [light, setLight] = useState(false);
+  const [isLight, setIsLight] = useState(false);
 
   useEffect(() => {
+    // Read directly from DOM to avoid hydration flicker
+    const active = document.documentElement.classList.contains("theme-light");
+    setIsLight(active);
     setMounted(true);
-    const saved = localStorage.getItem("emefast-theme");
-    const prefersLight = window.matchMedia?.("(prefers-color-scheme: light)").matches;
-    const next = saved ? saved === "light" : prefersLight;
-    document.documentElement.classList.toggle("theme-light", next);
-    document.documentElement.classList.toggle("theme-dark", !next);
-    setLight(next);
+
+    const handleThemeChange = (e: Event) => {
+      const custom = e as CustomEvent<{ theme: string }>;
+      if (custom?.detail?.theme) {
+        setIsLight(custom.detail.theme === "light");
+      }
+    };
+
+    window.addEventListener("emefast-theme-change", handleThemeChange);
+    return () => window.removeEventListener("emefast-theme-change", handleThemeChange);
   }, []);
 
   const toggle = () => {
-    const next = !light;
-    document.documentElement.classList.toggle("theme-light", next);
-    document.documentElement.classList.toggle("theme-dark", !next);
-    localStorage.setItem("emefast-theme", next ? "light" : "dark");
-    setLight(next);
+    const next = !isLight;
+    const root = document.documentElement;
+
+    if (next) {
+      root.classList.add("theme-light");
+      root.classList.remove("theme-dark");
+      root.setAttribute("data-theme", "light");
+      root.style.colorScheme = "light";
+      localStorage.setItem("emefast-theme", "light");
+    } else {
+      root.classList.remove("theme-light");
+      root.classList.add("theme-dark");
+      root.setAttribute("data-theme", "dark");
+      root.style.colorScheme = "dark";
+      localStorage.setItem("emefast-theme", "dark");
+    }
+
+    setIsLight(next);
+    window.dispatchEvent(
+      new CustomEvent("emefast-theme-change", { detail: { theme: next ? "light" : "dark" } })
+    );
   };
 
-  const isLight = mounted ? light : false;
+  const lightActive = mounted ? isLight : false;
 
   return (
     <button
       type="button"
-      suppressHydrationWarning
-      className={`liquid-glass-toggle ${isLight ? "light-mode" : "dark-mode"}`}
+      role="switch"
+      aria-checked={lightActive}
+      aria-label={lightActive ? "Switch to dark mode" : "Switch to light mode"}
+      title={lightActive ? "Switch to dark mode" : "Switch to light mode"}
+      className={`liquid-glass-toggle ${lightActive ? "light-mode" : "dark-mode"}`}
       onClick={toggle}
-      aria-label={isLight ? "Switch to dark mode" : "Switch to light mode"}
-      title={isLight ? "Switch to dark mode" : "Switch to light mode"}
+      suppressHydrationWarning
     >
-      {/* Curved glass refractive optical highlight overlay */}
+      {/* Meniscus curved optical glass highlight */}
       <span className="glass-meniscus-reflection" aria-hidden="true" />
-
-      {/* Prismatic edge refractions */}
       <span className="glass-prism-warm" aria-hidden="true" />
       <span className="glass-prism-cool" aria-hidden="true" />
 
       {/* Sliding Glass Orb Thumb */}
-      <span className={`liquid-glass-thumb ${isLight ? "thumb-right" : "thumb-left"}`} aria-hidden="true" />
+      <span
+        className={`liquid-glass-thumb ${lightActive ? "thumb-right" : "thumb-left"}`}
+        aria-hidden="true"
+      />
 
       {/* Moon Slot (Left) */}
-      <span className={`toggle-icon moon-icon ${!isLight ? "active-icon" : ""}`} aria-hidden="true">
-        <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round">
-          <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" />
-        </svg>
+      <span
+        className={`toggle-icon moon-icon ${!lightActive ? "active-icon" : ""}`}
+        aria-hidden="true"
+      >
+        <Moon size={15} strokeWidth={2.4} />
       </span>
 
       {/* Sun Slot (Right) */}
-      <span className={`toggle-icon sun-icon ${isLight ? "active-icon" : ""}`} aria-hidden="true">
-        <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round">
-          <circle cx="12" cy="12" r="4.5" />
-          <line x1="12" y1="2" x2="12" y2="4.5" />
-          <line x1="12" y1="19.5" x2="12" y2="22" />
-          <line x1="2" y1="12" x2="4.5" y2="12" />
-          <line x1="19.5" y1="12" x2="22" y2="12" />
-          <line x1="4.93" y1="4.93" x2="6.7" y2="6.7" />
-          <line x1="17.3" y1="17.3" x2="19.07" y2="19.07" />
-          <line x1="4.93" y1="19.07" x2="6.7" y2="17.3" />
-          <line x1="17.3" y1="6.7" x2="19.07" y2="4.93" />
-        </svg>
+      <span
+        className={`toggle-icon sun-icon ${lightActive ? "active-icon" : ""}`}
+        aria-hidden="true"
+      >
+        <Sun size={15} strokeWidth={2.4} />
       </span>
     </button>
   );

@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
-import { Activity, Siren, ShieldCheck, Ambulance, Building2, Settings2 } from "lucide-react";
+import { Siren, Ambulance, Building2, Settings2 } from "lucide-react";
 import ThemeToggle from "@/components/ThemeToggle";
 import FloatingDock from "@/components/FloatingDock";
 
@@ -22,11 +22,11 @@ export default function TopNav({ role = "USER" }: TopNavProps) {
     <>
       <header className="apple-nav">
         <div className="apple-nav-inner">
-          {/* Row 1 (44px): Logo, Flexible Spacer, Theme Toggle (44x44) + SOS (56x44) */}
+          {/* Row 1 (40px): Native EMEFast Logo, Flexible Spacer, Theme Toggle + SOS */}
           <div className="apple-nav-row-1">
             <Link href="/" className="liquid-logo-link" aria-label="EMEFast home">
               <span className="liquid-logo" aria-hidden="true">
-                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#ffffff" strokeWidth="2.8" strokeLinecap="round" strokeLinejoin="round">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#ffffff" strokeWidth="2.8" strokeLinecap="round" strokeLinejoin="round">
                   <path d="M3 13h4l4-8 3.5 14 3-6h3.5" />
                 </svg>
               </span>
@@ -42,7 +42,6 @@ export default function TopNav({ role = "USER" }: TopNavProps) {
                     </span>
                   </span>
                 </div>
-                <span className="brand-subtitle">EMERGENCY COORDINATION AI</span>
               </div>
             </Link>
 
@@ -59,14 +58,14 @@ export default function TopNav({ role = "USER" }: TopNavProps) {
                 aria-label="Open emergency SOS"
                 title="Open emergency SOS"
               >
-                <Siren size={18} strokeWidth={2.4} />
+                <Siren size={16} strokeWidth={2.4} />
                 <span>SOS</span>
               </button>
             </div>
           </div>
 
-          {/* Row 2 (36px): Full-width Apple Segmented Control */}
-          <div className="role-switcher" aria-label="Switch workspace">
+          {/* Row 2 (34px): Primary Workspace Selector [ Ambulance | Hospital | Admin ] */}
+          <div className="role-switcher" aria-label="Primary workspace switcher">
             <button
               type="button"
               className={activeRole === "USER" ? "active" : ""}
@@ -99,14 +98,9 @@ export default function TopNav({ role = "USER" }: TopNavProps) {
             </button>
           </div>
         </div>
-
-        <div className="apple-nav-subbar">
-          <span><ShieldCheck size={12} /> Verified hospital coordination</span>
-          <span className="subbar-note">No ambulance dispatch · recommendation & coordination only</span>
-        </div>
       </header>
 
-      {/* Floating Navigation Dock (12px below header) */}
+      {/* Secondary Navigation: Floating Glass Dock (10px below header) */}
       <FloatingDock role={activeRole} />
     </>
   );

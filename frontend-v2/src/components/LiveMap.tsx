@@ -152,7 +152,8 @@ export default function LiveMap({ origin, destination, destinationLabel = "Hospi
               onLivePosition?.(next);
               originMarkerRef.current?.setLatLng([next.lat, next.lng]);
               if (!allowManualPick) localMap.panTo([next.lat, next.lng], { animate: true, duration: 0.6 });
-              setMessage(`Live device location · ±${Math.round(reportedAccuracy)} m${reportedAccuracy > 100 ? " · approximate" : ""}`);
+              const timeStr = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' });
+              setMessage(`Live location · ±${Math.round(reportedAccuracy)} m · ${timeStr}${reportedAccuracy > 100 ? " (approx)" : ""}`);
             },
             () => setMessage("Map active · precise device GPS unavailable; case location remains unchanged"),
             { enableHighAccuracy: true, maximumAge: 0, timeout: 15000 }
@@ -213,12 +214,41 @@ export default function LiveMap({ origin, destination, destinationLabel = "Hospi
     return () => controller.abort();
   }, [livePosition.lat, livePosition.lng, destination?.lat, destination?.lng, onRouteInfo]);
 
+    const refreshGPS = () => {
+    if (!navigator.geolocation) return;
+    setMessage("Refreshing device GPS…");
+    navigator.geolocation.getCurrentPosition(
+      (pos) => {
+        const reportedAccuracy = Number(pos.coords.accuracy);
+        const next = { lat: pos.coords.latitude, lng: pos.coords.longitude };
+        livePositionRef.current = next;
+        setLivePosition(next);
+        onLivePosition?.(next);
+        originMarkerRef.current?.setLatLng([next.lat, next.lng]);
+        if (!allowManualPick) leafletMapRef.current?.panTo([next.lat, next.lng], { animate: true, duration: 0.6 });
+        const timeStr = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' });
+        setMessage(`Live location · ±${Math.round(reportedAccuracy)} m · ${timeStr}${reportedAccuracy > 100 ? " (approx)" : ""}`);
+      },
+      () => setMessage("Precise GPS unavailable · keeping current position"),
+      { enableHighAccuracy: true, maximumAge: 0, timeout: 12000 }
+    );
+  };
+
   return (
     <div className="live-map-shell">
       <div ref={mapRef} className="live-map" aria-label="Live emergency route map" />
       <div className={`live-map-status ${status === "error" ? "error" : ""}`}>
         <span className="live-map-status-dot" />
-        {message}
+        <span className="live-map-status-text">{message}</span>
+        <button
+          type="button"
+          onClick={refreshGPS}
+          className="live-map-refresh-btn"
+          title="Refresh device GPS"
+          aria-label="Refresh device GPS"
+        >
+          ↻
+        </button>
       </div>
       {status === "error" && <div className="live-map-error">Check your internet connection and GPS permission, then refresh the page.</div>}
     </div>
