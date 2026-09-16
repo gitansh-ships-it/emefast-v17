@@ -21,11 +21,17 @@ export const metadata: Metadata = {
 };
 export const viewport: Viewport = { themeColor: '#0B0D12', viewportFit: 'cover' };
 
+import AppSplashProvider from '@/components/AppSplashProvider';
+
 export default function RootLayout({ children }: { children: React.ReactNode }) {
-  return <html lang="en" data-scroll-behavior="smooth" suppressHydrationWarning>
+  return (
+    <html lang="en" data-scroll-behavior="smooth" suppressHydrationWarning>
       <head>
         <script dangerouslySetInnerHTML={{ __html: `(() => { try { const t=localStorage.getItem('emefast-theme'); const l=t==='light' || (!t && window.matchMedia('(prefers-color-scheme: light)').matches); document.documentElement.classList.toggle('theme-light',l); document.documentElement.classList.toggle('theme-dark',!l); } catch(e) {} })()` }} />
       </head>
-      <body>{children}</body>
-    </html>;
+      <body>
+        <AppSplashProvider>{children}</AppSplashProvider>
+      </body>
+    </html>
+  );
 }
